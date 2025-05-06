@@ -15,7 +15,7 @@ This project is a REST API for an online Heads or Tails Game.
 
 The following UML class diagran show an overview of the proposed database entities structure and relations.
 
-![entities_diagram](https://github.com/user-attachments/assets/23727ce9-04d6-40a0-a8b3-74f70a43b2b0)
+![entities_diagram_basic](https://github.com/user-attachments/assets/581a3322-402c-452c-8361-175847cf8de3)
 
 ## Project Setup
 
@@ -37,6 +37,9 @@ In order to get the project working, after cloning the project, the application.
 ## Future Work
 
 - Add payment and products
+  
+![entities_diagram](https://github.com/user-attachments/assets/23727ce9-04d6-40a0-a8b3-74f70a43b2b0)
+
 - Frontend as a Unity or Three.js simple game, that make the corresponding requests.
 
 ## Resources
