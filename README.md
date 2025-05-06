@@ -16,3 +16,34 @@ This project is a REST API for an online Heads or Tails Game.
 The following UML class diagran show an overview of the proposed database entities structure and relations.
 
 ![entities_diagram](https://github.com/user-attachments/assets/23727ce9-04d6-40a0-a8b3-74f70a43b2b0)
+
+## Project Setup
+
+The project is divided into two different modules in maven.
+
+- Application Module
+- Security Module
+
+In order to get the project working, after cloning the project, the application.properties file must be configured in order to set up the local databse and other configurations.
+
+## Technologies
+
+## Controllers and routes
+
+## Extra links
+
+- Trello : https://trello.com/b/VV9GqzQK/headsortailsapi
+
+## Future Work
+
+- Add payment and products
+- Frontend as a Unity or Three.js simple game, that make the corresponding requests.
+
+## Resources
+
+- PlantUML : https://plantuml.com/es/
+
+## Team
+
+#### Álvaro González Alcázar
+- LinkedIn : https://www.linkedin.com/in/alvarogonzalezal/
