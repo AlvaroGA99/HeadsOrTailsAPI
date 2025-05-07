@@ -16,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long id;
 
     private String username;
@@ -29,5 +29,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "heads_user")
+    private Set<Match> headsMatches;
+
+    @OneToMany(mappedBy = "tails_user")
+    private Set<Match> tailsMatches;
+
+
 
 }
