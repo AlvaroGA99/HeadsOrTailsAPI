@@ -210,6 +210,8 @@ public class MatchRepositoryCRUDTests {
         updatedMatch.setHeadsWinner(false);
         updatedMatch.setHeadsBet(200);
         updatedMatch.setTailsBet(100);
+        updatedMatch.setHeadsUser(tailsUser);
+        updatedMatch.setTailsUser(headsUser);
 
         Match savedMatch = matchRepository.save(updatedMatch);
         assertEquals(savedMatch, updatedMatch);
