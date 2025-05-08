@@ -41,6 +41,7 @@ Finally test the functionality through Postman or any other client.
 ## Extra links
 
 - Trello : https://trello.com/b/VV9GqzQK/headsortailsapi
+- Google Slides Presentation : https://docs.google.com/presentation/d/1qjzWJpfmYn7KSrPbCyDaV7ecei2tsyxw9wNiYUHM8lg/edit?usp=drive_link
 
 ## Future Work
 
