@@ -31,7 +31,7 @@ public class RoleRepositoryCRUDTests {
 
     @AfterEach
     void tearDown() {
-        roleRepository.deleteAll();
+        roleRepository.delete(role);
     }
 
 
@@ -52,7 +52,7 @@ public class RoleRepositoryCRUDTests {
     }
 
     @Test
-    void findByID(){
+    void testFindByID(){
         Optional<Role> r = roleRepository.findById(role.getId());
         assertTrue(r.isPresent());
         assertNotNull(r.get().getName());
@@ -61,7 +61,7 @@ public class RoleRepositoryCRUDTests {
     }
 
     @Test
-    void findByName(){
+    void testFindByName(){
         Optional<Role> optionalRole = roleRepository.findByName(ERole.ROLE_USER);
         assertTrue(optionalRole.isPresent());
         assertNotNull(optionalRole.get().getName());
@@ -69,14 +69,14 @@ public class RoleRepositoryCRUDTests {
     }
 
     @Test
-    void deleteById(){
-        roleRepository.deleteById(1L);
-        Optional<Role> role = roleRepository.findById(1L);
-        assertFalse(role.isPresent());
+    void testDeleteById(){
+        roleRepository.deleteById(role.getId());
+        Optional<Role> r = roleRepository.findById(role.getId());
+        assertFalse(r.isPresent());
     }
 
     @Test
-    void deleteAll(){
+    void testDeleteAll(){
         roleRepository.deleteAll();
         List<Role> roles = roleRepository.findAll();
         assertTrue(roles.isEmpty());
