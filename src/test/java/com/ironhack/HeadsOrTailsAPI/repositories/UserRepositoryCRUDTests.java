@@ -4,7 +4,6 @@ import com.ironhack.HeadsOrTailsAPI.models.ERole;
 import com.ironhack.HeadsOrTailsAPI.models.Role;
 import com.ironhack.HeadsOrTailsAPI.models.User;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +52,12 @@ public class UserRepositoryCRUDTests {
     void testSaveUser() {
         User savedUser = userRepository.save(user);
         assertNotNull(savedUser);
-        assertNotNull(savedUser.getId());
+        assertNotNull(savedUser.getUsername());
         assertNotNull(savedUser.getUsername());
         assertNotNull(savedUser.getPassword());
         assertNotNull(savedUser.getRoles());
 
-        assertEquals(savedUser.getId(),user.getId());
+        assertEquals(savedUser.getUsername(),user.getUsername());
         assertEquals(savedUser.getUsername(),user.getUsername());
         assertEquals(savedUser.getPassword(),user.getPassword());
         assertEquals(savedUser.getCoins(),user.getCoins());
@@ -78,14 +77,14 @@ public class UserRepositoryCRUDTests {
     @Test
     @Transactional
     void testFindByID(){
-        Optional<User> optionalUser = userRepository.findById(user.getId());
+        Optional<User> optionalUser = userRepository.findById(user.getUsername());
         assertTrue(optionalUser.isPresent());
-        assertNotNull(optionalUser.get().getId());
+        assertNotNull(optionalUser.get().getUsername());
         assertNotNull(optionalUser.get().getUsername());
         assertNotNull(optionalUser.get().getPassword());
         assertNotNull(optionalUser.get().getRoles());
 
-        assertEquals(optionalUser.get().getId(),user.getId());
+        assertEquals(optionalUser.get().getUsername(),user.getUsername());
         assertEquals(optionalUser.get().getUsername(),user.getUsername());
         assertEquals(optionalUser.get().getPassword(),user.getPassword());
         assertEquals(optionalUser.get().getCoins(),user.getCoins());

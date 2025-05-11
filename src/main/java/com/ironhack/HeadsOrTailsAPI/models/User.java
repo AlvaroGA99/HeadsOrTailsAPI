@@ -14,11 +14,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
 
+    @Id
+    @Column(name = "username")
     private String username;
     private String password;
     private int elo;
@@ -26,7 +24,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
