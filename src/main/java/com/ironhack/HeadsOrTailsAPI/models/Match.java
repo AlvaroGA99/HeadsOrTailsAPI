@@ -30,11 +30,11 @@ public abstract class Match {
 
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "heads_user_id")
     private User headsUser;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tails_user_id")
     private User tailsUser;
 
