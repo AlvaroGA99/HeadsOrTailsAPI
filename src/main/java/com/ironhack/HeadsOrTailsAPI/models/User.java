@@ -28,10 +28,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "headsUser",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "headsUser",cascade = CascadeType.ALL)
     private Set<Match> headsMatches;
 
-    @OneToMany(mappedBy = "tailsUser",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "tailsUser",cascade = CascadeType.ALL)
     private Set<Match> tailsMatches;
 
 
