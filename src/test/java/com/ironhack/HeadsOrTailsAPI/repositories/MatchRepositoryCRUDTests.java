@@ -15,6 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+//This annotation isolate the test in "session" so all the changes in the database are reverted. However i ensure the deletion by using after each.
 @Transactional
 public class MatchRepositoryCRUDTests {
 
