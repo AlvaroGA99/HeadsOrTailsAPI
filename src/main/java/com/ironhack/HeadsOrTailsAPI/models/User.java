@@ -37,10 +37,10 @@ public class User {
     private Set<Role> roles;
 
 
-    @OneToMany(mappedBy = "headsUser",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "headsUser")
     private Set<Match> headsMatches;
 
-    @OneToMany(mappedBy = "tailsUser",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tailsUser")
     private Set<Match> tailsMatches;
 
 
