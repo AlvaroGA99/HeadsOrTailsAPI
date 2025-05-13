@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String> {
 
     List<User> findByElo(int elo);
+    List<User> findByEloBetween(int startElo, int endElo);
+    List<User> findByCoinsBetween(int startCoins, int endCoins);
     List<User> findByCoins(int coins);
     List<User> findByRoles(Role roles);
 

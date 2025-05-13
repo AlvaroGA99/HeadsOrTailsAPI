@@ -1,5 +1,9 @@
 package com.ironhack.HeadsOrTailsAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ironhack.HeadsOrTailsAPI.HeadsOrTailsApiApplication;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +19,11 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"  // for Match
+)
+
 public abstract class Match {
 
     @Id
@@ -30,11 +39,11 @@ public abstract class Match {
 
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "heads_user_id")
     private User headsUser;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "tails_user_id")
     private User tailsUser;
 
