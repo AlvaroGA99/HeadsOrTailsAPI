@@ -1,4 +1,5 @@
 package com.ironhack.HeadsOrTailsAPI.controllers;
+import com.ironhack.HeadsOrTailsAPI.dtos.UserCredentialDTO;
 import com.ironhack.HeadsOrTailsAPI.dtos.UserNumericalDTO;
 import com.ironhack.HeadsOrTailsAPI.models.ERole;
 import com.ironhack.HeadsOrTailsAPI.models.Role;
@@ -30,7 +31,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/public/{username}")
     @ResponseStatus(HttpStatus.OK)
     public User getUserById(String username) {
         return userRepository.findById(username).orElseThrow(() -> new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
@@ -43,35 +44,35 @@ public class UserController {
         return new User();
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"elo"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByElo(@RequestParam(name="elo") int elo) {
         return userRepository.findByElo(elo);
 
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"startElo", "endElo"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByEloBetween(@RequestParam(name="startElo") int startElo, @RequestParam(name="endElo") int endElo) {
        return userRepository.findByEloBetween(startElo,endElo);
 
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"coins"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByCoins(@RequestParam(name="coins") int coins) {
         return userRepository.findByCoins(coins);
 
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"startCoins", "endCoins"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByCoinsBetween(@RequestParam(name="startCoins") int startCoins, @RequestParam(name="endCoins") int endCoins) {
         return userRepository.findByCoinsBetween(startCoins,endCoins);
 
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"role"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByRoles(@RequestParam(name="role") String role) {
         Optional<Role> optionalRole = roleRepository.findByName(ERole.valueOf(role));
@@ -85,35 +86,35 @@ public class UserController {
 
     }
 
-    @GetMapping
+    @GetMapping(params = {"date"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByPlayedOnDate(@RequestParam(name="date") String date) {
         return userRepository.findByPlayedOnDate(date);
 
     }
 
-    @GetMapping
+    @GetMapping(params = {"startDate", "endDate"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByPlayedOnDateBetween(@RequestParam(name="startDate") String startDate, @RequestParam(name="endDate") String endDate) {
         return userRepository.findByPlayedOnDateBetween(startDate,endDate);
 
     }
 
-    @GetMapping("/public")
+    @GetMapping(value = "/public", params = {"username"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByUsernameContaining(@RequestParam(name="username") String username) {
         return userRepository.findByUsernameContaining(username);
 
     }
 
-    @GetMapping
+    @GetMapping(params = {"date", "username"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByPlayedOnDateAndUsername(@RequestParam(name="date") String date, @RequestParam(name="username") String username) {
         return userRepository.findByPlayedOnDateAndUsername(date,username);
 
     }
 
-    @GetMapping
+    @GetMapping(params = {"startDate", "endDate", "username"})
     @ResponseStatus(HttpStatus.OK)
     public List<User> findByPlayedOnDateBetweenAndUsername(@RequestParam(name="startDate") String startDate, @RequestParam(name="endDate") String endDate, @RequestParam(name="username") String username) {
         return userRepository.findByPlayedOnDateBetweenAndUsername(startDate,endDate,username);
@@ -143,7 +144,7 @@ public class UserController {
         userRepository.save(user);
     }
 
-    @PatchMapping("/{username}")
+    @PatchMapping("/{username}/updateNumericals")
     @ResponseStatus(HttpStatus.OK)
     public void updateNumericals(@RequestBody UserNumericalDTO dto, @PathVariable String username) {
         Optional<User> existingUser = userRepository.findById(username);
@@ -156,15 +157,20 @@ public class UserController {
         userRepository.save(existingUser.get());
     }
 
-    @PatchMapping("/{username}")
+    @PatchMapping("/{username}/updatePassword")
     @ResponseStatus(HttpStatus.OK)
-    public void updatePassword(@RequestBody String password, @PathVariable String username) {
+    public void updatePassword(@RequestBody UserCredentialDTO dto, @PathVariable String username) {
         Optional<User> existingUser = userRepository.findById(username);
         if(existingUser.isEmpty()){
             throw new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
             };
         }
-        existingUser.get().setPassword(password);
+
+        if(dto.getPassword() == null || dto.getPassword().isEmpty()){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
+
+        existingUser.get().setPassword(dto.getPassword());
         userRepository.save(existingUser.get());
     }
 
@@ -172,7 +178,7 @@ public class UserController {
     //DELETE
 
     @DeleteMapping("/{username}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable String username) {
         Optional<User> user = userRepository.findById(username);
         if(user.isEmpty()){
