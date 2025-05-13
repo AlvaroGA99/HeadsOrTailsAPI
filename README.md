@@ -36,7 +36,49 @@ Finally test the functionality through Postman or any other client.
 
 ## Technologies
 
+- Java 21
+- Spring Boot 3.4.5
+- Spring Security
+- Spring Data JPA (Hibernate)
+- JWT
+- Spring Web
+- JUnit 5
+
 ## Controllers and routes
+
+Controllers have been divided into MatchControllers, with its respective inherited subclasses, and UserControllers. Each controllers manages the access level after the controller base path.
+Routes containing "/public" are public access endpoints, while the routes contaiing "/profile" require authentication. The rest of the routes are only accessible by admin users.
+
+  - **MatchController** : /matches
+    - **GET** : /matches/public (with corresponding request params)
+    - **GET** : /matches/public/{id}
+    - **PATCH** : /matches/{id}
+    - **DELETE** : /matches/{id}
+    - **RankedMatchController** : /rankedMatches
+      - **GET** : /rankedMatches/public (with corresponding request params)
+      - **GET** : /rankedMatches/public/{id}
+      - **PATCH** : /rankedMatches/{id}
+      - **DELETE** : /rankedMatches/{id}
+      - **POST** : /rankedMatches
+      - **PUT** : /rankedMatches/{id}
+  - **RegularMatchController** : /regularMatches
+    - **GET** : /regularMatches/public (with corresponding request params)
+    - **GET** : /regularMatches/public/{id}
+    - **PATCH** : /regularMatches/{id}
+    - **DELETE** : /regularMatches/{id}
+    - **POST** : /regularMatches
+    - **PUT** : /regularMatches/{id}
+- **UserController** : /users
+    - **GET** : /users/public (with corresponding request params)
+    - **GET** : /users/profile
+    - **GET** : /users/public/{username}
+    - **PATCH** : /regularMatches/{id}
+    - **DELETE** : /regularMatches/{id}
+    - **POST** : /regularMatches
+    - **PUT** : /regularMatches/{id}
+
+As the structure shows, all the endpoints that make any sort of change to the database are admin-only accesible.
+It also shows, that all the POST and PUT request for matches are only implemented at derived subclasses routes, in order to avoid problem of abstract classes instantation.
 
 ## Extra links
 
@@ -53,11 +95,13 @@ Finally test the functionality through Postman or any other client.
   
 ![entities_diagram](https://github.com/user-attachments/assets/23727ce9-04d6-40a0-a8b3-74f70a43b2b0)
 
+- Update the corresponding user info depending on the results of the matches.
 - Frontend as a Unity or Three.js simple game, that make the corresponding requests.
 
 ## Resources
 
 - PlantUML : https://plantuml.com/es/
+- Baeldung (Spring Boot help) : https://www.baeldung.com/spring-boot
 
 ## Team
 
