@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,8 @@ public class UserController {
 
     @GetMapping("/public/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public User getUserById(String username) {
-        return userRepository.findById(username).orElseThrow(() -> new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
+    public User getUserById(@PathVariable String username) {
+        return userRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND) {
         });
     }
 
@@ -78,7 +79,7 @@ public class UserController {
         Optional<Role> optionalRole = roleRepository.findByName(ERole.valueOf(role));
         Role result_role;
         if(optionalRole.isEmpty()){
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{
             result_role = optionalRole.get();
         }
@@ -137,7 +138,7 @@ public class UserController {
     public void updateUser(@PathVariable String username, @RequestBody User user) {
         Optional<User> existingUser = userRepository.findById(username);
         if(existingUser.isEmpty()){
-            throw new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND) {
             };
         }
         user.setUsername(username);
@@ -149,7 +150,7 @@ public class UserController {
     public void updateNumericals(@RequestBody UserNumericalDTO dto, @PathVariable String username) {
         Optional<User> existingUser = userRepository.findById(username);
         if(existingUser.isEmpty()){
-            throw new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND) {
             };
         }
         existingUser.get().setCoins(dto.getCoins());
@@ -162,12 +163,12 @@ public class UserController {
     public void updatePassword(@RequestBody UserCredentialDTO dto, @PathVariable String username) {
         Optional<User> existingUser = userRepository.findById(username);
         if(existingUser.isEmpty()){
-            throw new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND) {
             };
         }
 
         if(dto.getPassword() == null || dto.getPassword().isEmpty()){
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         existingUser.get().setPassword(dto.getPassword());
@@ -182,7 +183,7 @@ public class UserController {
     public void deleteUser(@PathVariable String username) {
         Optional<User> user = userRepository.findById(username);
         if(user.isEmpty()){
-            throw new HttpStatusCodeException(HttpStatus.NOT_FOUND) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND) {
             };
         }
         userRepository.deleteById(username);

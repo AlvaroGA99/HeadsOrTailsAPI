@@ -17,4 +17,8 @@ public class MatchDataDTO {
     private int tailsBet;
 
     private Date date;
+
+    private String headsUser;
+
+    private String tailsUser;
 }

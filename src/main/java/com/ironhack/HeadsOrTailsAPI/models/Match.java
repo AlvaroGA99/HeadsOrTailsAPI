@@ -1,5 +1,9 @@
 package com.ironhack.HeadsOrTailsAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ironhack.HeadsOrTailsAPI.HeadsOrTailsApiApplication;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +19,11 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"  // for Match
+)
+
 public abstract class Match {
 
     @Id
