@@ -2,6 +2,7 @@ package com.ironhack.HeadsOrTailsAPI.repositories;
 
 import com.ironhack.HeadsOrTailsAPI.models.ERole;
 import com.ironhack.HeadsOrTailsAPI.models.Role;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 public class RoleRepositoryCRUDTests {
 
     @Autowired

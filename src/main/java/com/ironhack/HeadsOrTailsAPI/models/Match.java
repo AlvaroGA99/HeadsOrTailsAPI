@@ -19,9 +19,10 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+// Instead of using @JsonBackReference and @JsonManagedReference, i use @JsonIdentityInfo as it doesnt require an owner of the relationship
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"  // for Match
+        property = "id"
 )
 
 public abstract class Match {

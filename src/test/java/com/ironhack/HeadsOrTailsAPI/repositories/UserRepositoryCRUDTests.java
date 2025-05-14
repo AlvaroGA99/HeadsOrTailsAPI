@@ -52,12 +52,11 @@ public class UserRepositoryCRUDTests {
     void testSaveUser() {
         User savedUser = userRepository.save(user);
         assertNotNull(savedUser);
-        assertNotNull(savedUser.getUsername());
+
         assertNotNull(savedUser.getUsername());
         assertNotNull(savedUser.getPassword());
         assertNotNull(savedUser.getRoles());
 
-        assertEquals(savedUser.getUsername(),user.getUsername());
         assertEquals(savedUser.getUsername(),user.getUsername());
         assertEquals(savedUser.getPassword(),user.getPassword());
         assertEquals(savedUser.getCoins(),user.getCoins());
@@ -78,13 +77,12 @@ public class UserRepositoryCRUDTests {
     @Transactional
     void testFindByID(){
         Optional<User> optionalUser = userRepository.findById(user.getUsername());
+
         assertTrue(optionalUser.isPresent());
-        assertNotNull(optionalUser.get().getUsername());
         assertNotNull(optionalUser.get().getUsername());
         assertNotNull(optionalUser.get().getPassword());
         assertNotNull(optionalUser.get().getRoles());
 
-        assertEquals(optionalUser.get().getUsername(),user.getUsername());
         assertEquals(optionalUser.get().getUsername(),user.getUsername());
         assertEquals(optionalUser.get().getPassword(),user.getPassword());
         assertEquals(optionalUser.get().getCoins(),user.getCoins());
@@ -94,38 +92,99 @@ public class UserRepositoryCRUDTests {
 
     }
 
-    @Test
-    void testFindByUsername(){
-        fail("Not yet implemented");
-    }
 
     @Test
     void testFindByElo(){
-        fail("Not yet implemented");
+        List<User> users = userRepository.findByElo(user.getElo());
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        assertNotNull(users.get(0));
+
+        assertNotNull(users.get(0).getUsername());
+        assertNotNull(users.get(0).getPassword());
+        assertNotNull(users.get(0).getRoles());
+
+        assertEquals(users.get(0).getUsername(),user.getUsername());
+        assertEquals(users.get(0).getPassword(),user.getPassword());
+        assertEquals(users.get(0).getCoins(),user.getCoins());
+        assertEquals(users.get(0).getElo(),user.getElo());
+        assertEquals(users.get(0).getRoles(),user.getRoles());
     }
 
     @Test
     void testFindByCoins(){
-        fail("Not yet implemented");
+        List<User> users = userRepository.findByCoins(user.getCoins());
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        assertNotNull(users.get(0));
+
+        assertNotNull(users.get(0).getUsername());
+        assertNotNull(users.get(0).getPassword());
+        assertNotNull(users.get(0).getRoles());
+
+        assertEquals(users.get(0).getUsername(),user.getUsername());
+        assertEquals(users.get(0).getPassword(),user.getPassword());
+        assertEquals(users.get(0).getCoins(),user.getCoins());
+        assertEquals(users.get(0).getElo(),user.getElo());
+        assertEquals(users.get(0).getRoles(),user.getRoles());
     }
 
     @Test
     void testFindByRole(){
-        fail("Not yet implemented");
+        List<User> users = userRepository.findByRoles(role);
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        assertNotNull(users.get(0));
+
+        assertNotNull(users.get(0).getUsername());
+        assertNotNull(users.get(0).getPassword());
+        assertNotNull(users.get(0).getRoles());
+
+        assertEquals(users.get(0).getUsername(),user.getUsername());
+        assertEquals(users.get(0).getPassword(),user.getPassword());
+        assertEquals(users.get(0).getCoins(),user.getCoins());
+        assertEquals(users.get(0).getElo(),user.getElo());
+        assertEquals(users.get(0).getRoles(),user.getRoles());
     }
 
     @Test
     void testDeleteById(){
-        fail("Not yet implemented");
+        userRepository.deleteById(user.getUsername());
+        Optional<User> optionalUser = userRepository.findById(user.getUsername());
+        assertFalse(optionalUser.isPresent());
     }
 
     @Test
     void testDeleteAll(){
-        fail("Not yet implemented");
+        userRepository.deleteAll();
+        List<User> users = userRepository.findAll();
+        assertTrue(users.isEmpty());
     }
 
     @Test
     void testUpdate(){
-        fail("Not yet implemented");
+        Optional<User> optionalUser = userRepository.findById(user.getUsername());
+        assertTrue(optionalUser.isPresent());
+        assertNotNull(optionalUser.get().getUsername());
+        assertNotNull(optionalUser.get().getPassword());
+        assertNotNull(optionalUser.get().getRoles());
+
+        User updatedUser = optionalUser.get();
+        updatedUser.setUsername("updatedUsername");
+        updatedUser.setPassword("updatedPassword");
+        updatedUser.setCoins(200);
+        updatedUser.setElo(1300);
+        updatedUser = userRepository.save(updatedUser);
+
+        assertNotNull(updatedUser);
+        assertNotNull(updatedUser.getUsername());
+        assertNotNull(updatedUser.getPassword());
+        assertNotNull(updatedUser.getRoles());
+
+        assertEquals("updatedUsername", updatedUser.getUsername());
+        assertEquals("updatedPassword", updatedUser.getPassword());
+        assertEquals(200, updatedUser.getCoins());
+        assertEquals(1300, updatedUser.getElo());
+
     }
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//Same as match
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "username"
@@ -30,17 +32,15 @@ public class User {
     private int elo;
     private int coins;
 
-    @ManyToMany
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    @JoinTable(name = "user_roles")
+    private Collection<Role> roles;
 
 
-    @OneToMany(mappedBy = "headsUser",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "headsUser")
     private Set<Match> headsMatches;
 
-    @OneToMany(mappedBy = "tailsUser",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tailsUser")
     private Set<Match> tailsMatches;
 
 

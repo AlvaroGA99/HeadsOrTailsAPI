@@ -1,6 +1,7 @@
 package com.ironhack.HeadsOrTailsAPI.repositories;
 
 import com.ironhack.HeadsOrTailsAPI.models.*;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,19 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+//This annotation isolate the test in "session" so all the changes in the database are reverted. However i ensure the deletion by using after each.
+@Transactional
 public class MatchRepositoryCRUDTests {
 
      @Autowired
      MatchRepository matchRepository;
+
+     @Autowired
+     RegularMatchRepository regularMatchRepository;
+
+     @Autowired
+        RankedMatchRepository rankedMatchRepository;
+
      @Autowired
      UserRepository userRepository;
 
@@ -36,8 +46,8 @@ public class MatchRepositoryCRUDTests {
         headsUser.setPassword("testPassword1");
         tailsUser.setPassword("testPassword2");
         headsUser.setCoins(100);
-        tailsUser.setCoins(100);
-        headsUser.setElo(1200);
+        tailsUser.setCoins(1000);
+        headsUser.setElo(12000);
         tailsUser.setElo(1200);
 
         headsUser = userRepository.save(headsUser);
@@ -115,13 +125,20 @@ public class MatchRepositoryCRUDTests {
 
     @Test
     void testFindAllRegularMatches(){
-        fail("Not yet implemented");
+        List<RegularMatch> matches = regularMatchRepository.findAll();
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertTrue(matches.contains(regularMatch));
+
 
     }
 
     @Test
     void testFindAllRankedMatches(){
-        fail("Not yet implemented");
+        List<RankedMatch> matches = rankedMatchRepository.findAll();
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertTrue(matches.contains(rankedMatch));
     }
 
     @Test
@@ -138,43 +155,68 @@ public class MatchRepositoryCRUDTests {
 
     @Test
     void testFindByHeadsId(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByHeadsUser(headsUser);
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(headsUser.getUsername(), matches.get(0).getHeadsUser().getUsername());
+
 
     }
 
     @Test
     void testFindByTailsId(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByTailsUser(tailsUser);
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(tailsUser.getUsername(), matches.get(0).getTailsUser().getUsername());
     }
 
     @Test
     void testFindByDate(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByDate(regularMatch.getDate());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(regularMatch.getDate(), matches.get(0).getDate());
     }
 
     @Test
     void testFindByHeadsWinner(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByHeadsWinner(regularMatch.isHeadsWinner());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(regularMatch.isHeadsWinner(), matches.get(0).isHeadsWinner());
     }
 
     @Test
     void testFindByHeadsBet(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByHeadsBet(regularMatch.getHeadsBet());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(regularMatch.getHeadsBet(), matches.get(0).getHeadsBet());
     }
 
     @Test
     void testFindByTailsBet(){
-        fail("Not yet implemented");
+        List<Match> matches = matchRepository.findByTailsBet(regularMatch.getTailsBet());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(regularMatch.getTailsBet(), matches.get(0).getTailsBet());
     }
 
     @Test
     void testFindByPromotionMatch(){
-        fail("Not yet implemented");
+        List<RankedMatch> matches = rankedMatchRepository.findByIsPromotionMatch(rankedMatch.isPromotionMatch());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(rankedMatch.isPromotionMatch(), matches.get(0).isPromotionMatch());
     }
 
     @Test
     void testFindByEloRating(){
-        fail("Not yet implemented");
+        List<RankedMatch> matches = rankedMatchRepository.findByEloRating(rankedMatch.getEloRating());
+        assertNotNull(matches);
+        assertFalse(matches.isEmpty());
+        assertEquals(rankedMatch.getEloRating(), matches.get(0).getEloRating());
     }
 
     @Test
