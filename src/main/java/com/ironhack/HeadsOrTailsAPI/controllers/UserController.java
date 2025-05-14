@@ -135,14 +135,14 @@ public class UserController {
 
     @PutMapping("/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable String username, @RequestBody User user) {
+    public User updateUser(@PathVariable String username, @RequestBody User user) {
         Optional<User> existingUser = userRepository.findById(username);
         if(existingUser.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND) {
             };
         }
         user.setUsername(username);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @PatchMapping("/{username}/updateNumericals")
